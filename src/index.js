@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const audioContainer = document.getElementById('audio-container')
   const onOffButton = document.getElementById('on-off-button')
   const canvas = document.getElementById('audio-canvas')
-  const bodyDiv = document.getElementById('body-div')
+  const waveSpan = document.getElementById('wave-span')
 
   const audioContext = new (window.AudioContext || window.webkitAudioContext)()
   let osc = audioContext.createOscillator()
@@ -128,6 +128,16 @@ document.addEventListener('DOMContentLoaded', () => {
     } else if (event.target.dataset.on == 0) {
       event.target.dataset.on = 1
       gain.connect(audioContext.destination)
+    }
+  })
+
+  waveSpan.addEventListener('click', (event) => {
+    if (event.target.id === 'sine-wave') {
+      osc.type = 'sine'
+    } else if (event.target.id === 'square-wave') {
+      osc.type = 'square'
+    } else if (event.target.id === 'saw-wave') {
+      osc.type = 'sawtooth'
     }
   })
 

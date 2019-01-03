@@ -25,6 +25,14 @@
   border-radius: 5px;
 }
 
+#about-button {
+  float: right;
+}
+
+#wave-span {
+  float: right;
+}
+
 #button-container {
   margin-top: 5px;
 }
