@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const onOffButton = document.getElementById('on-off-button')
   const canvas = document.getElementById('audio-canvas')
   const waveSpan = document.getElementById('wave-span')
+  const tooltipText = document.querySelector('.tooltiptext')
 
   const audioContext = new (window.AudioContext || window.webkitAudioContext)()
   let osc = audioContext.createOscillator()
@@ -26,6 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
       .then(response => response.json())
       .then(scape => {
         makeButtons(scape.sounds)
+        loadDescription(scape)
       })
   }
 
@@ -56,11 +58,17 @@ document.addEventListener('DOMContentLoaded', () => {
   const playSound = (sound) => {
     let newSound = new Audio(`sounds/${sound.source}`)
     newSound.dataset.id = `${sound.id}`
-    // newSound.dataset.playing = true
     audioContainer.appendChild(newSound)
     newSound.loop = true
     newSound.play()
     animateBackground()
+  }
+
+  const loadDescription = (scape) => {
+    tooltipText.innerHTML = `${scape.theme} sounds, including: `
+    scape.sounds.forEach(sound => {
+      tooltipText.innerHTML += `${sound.description} `
+    })
   }
 
   const animateBackground = () => {
@@ -71,8 +79,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   const createNodes = () => {
-    // let osc = audioContext.createOscillator()
-    // let gain = audioContext.createGain()
 
     osc.connect(gain)
     gain.connect(audioContext.destination)
@@ -87,7 +93,6 @@ document.addEventListener('DOMContentLoaded', () => {
       console.log(event);
       osc.frequency.value = Math.abs(350 - event.clientX) / 100 * 1300
       gain.gain.value = (370 - event.clientY) / 100 * .5
-      // document.body.style.backgroundColor = `#${event.clientX}`
     })
   }
 
