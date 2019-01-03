@@ -3,22 +3,31 @@
   <head>
     <meta charset="utf-8">
     <title>s o u n d s c a p e s</title>
+    <link rel="stylesheet" href="src/styles.css">
     <script src="src/index.js" charset="utf-8"></script>
   </head>
   <body>
-    <div id="soundscape-select">
-      <select id="dropdown">
-        <option value="" disabled selected>Select a soundScape</option>
-      </select>
+    <div class="center">
+      <div id="soundscape-select">
+        <select id="dropdown">
+          <option value="" disabled selected>Select a soundScape</option>
+        </select>
+      </div>
+      <div id="button-container">
+      </div>
+      <div id="canvas-container">
+        <canvas id="audio-canvas" width="200" height="100" style="border:1px solid #000000;">
+        </canvas>
+      </div>
+      <div id="synth-control">
+        <button type="button" id="on-off-button" data-on="off">🔊</button>
+      </div>
+      <div id="audio-container" hidden>
+      </div>
+      <!-- <div id="color-button">
+        <button type="button" id="color-changer">COLOR</button>
+      </div> -->
     </div>
-    <div id="button-container">
-    </div>
-    <div id="canvas-container">
-      <canvas id="audio-canvas" width="200" height="100" style="border:1px solid #000000;">
-      </canvas>
-    </div>
-    <div id="synth-control">
-      <button type="button" id="on-off-button" data-on="off">🔊</button>
-    </div>
+
   </body>
 </html>

@@ -1,0 +1,14 @@
+.center {
+  position: absolute;
+  border: 20px;
+  top: 40%;
+  left: 40%;
+}
+
+@keyframes background {
+  0%   { background-color: #3366ff }
+  25%  { background-color: #669999 }
+  50%  { background-color: #ccff99 }
+  75%  { background-color: #993333 }
+  100% { background-color: #0099cc }
+}
