@@ -6,15 +6,16 @@ document.addEventListener('DOMContentLoaded', () => {
   const audioContainer = document.getElementById('audio-container')
   const onOffButton = document.getElementById('on-off-button')
   const canvas = document.getElementById('audio-canvas')
-  // const colorButton = document.getElementById('color-changer')
+  const bodyDiv = document.getElementById('body-div')
 
   const audioContext = new (window.AudioContext || window.webkitAudioContext)()
+  let osc = audioContext.createOscillator()
+  let gain = audioContext.createGain()
 
   const getSoundscapes = () => {
     fetch(soundscapeURL)
       .then(response => response.json())
       .then(data => {
-        console.log(data);
         fillMenu(data)
       })
   }
@@ -24,7 +25,6 @@ document.addEventListener('DOMContentLoaded', () => {
     fetch(soundscapeURL + id)
       .then(response => response.json())
       .then(scape => {
-        console.log(scape);
         makeButtons(scape.sounds)
       })
   }
@@ -56,15 +56,23 @@ document.addEventListener('DOMContentLoaded', () => {
   const playSound = (sound) => {
     let newSound = new Audio(`sounds/${sound.source}`)
     newSound.dataset.id = `${sound.id}`
-    newSound.dataset.playing = true
+    // newSound.dataset.playing = true
     audioContainer.appendChild(newSound)
-    console.log(newSound);
+    newSound.loop = true
     newSound.play()
+    animateBackground()
+  }
+
+  const animateBackground = () => {
+    document.body.style.animationName = 'background'
+    document.body.style.animationDuration = '10s'
+    document.body.style.animationIterationCount = 'infinite'
+    document.body.style.animationDirection = 'alternate'
   }
 
   const createNodes = () => {
-    let osc = audioContext.createOscillator()
-    let gain = audioContext.createGain()
+    // let osc = audioContext.createOscillator()
+    // let gain = audioContext.createGain()
 
     osc.connect(gain)
     gain.connect(audioContext.destination)
@@ -77,15 +85,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     canvas.addEventListener('mousemove', (event) => {
       console.log(event);
-      osc.frequency.value = event.clientX / 210 * 1000
-      gain.gain.value = (110 - event.clientY) / 110 * .05
+      osc.frequency.value = Math.abs(350 - event.clientX) / 100 * 1300
+      gain.gain.value = (370 - event.clientY) / 100 * .5
+      // document.body.style.backgroundColor = `#${event.clientX}`
     })
   }
 
   const muteAll = () => {
     audioContainer.innerHTML = ''
-    // let playing = document.getElementsByTagName("AUDIO")
-    //   console.log(playing);
   }
 
   const muteOne = (id) => {
@@ -95,6 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   dropdownMenu.addEventListener('change', (event) => {
     muteAll()
+    document.body.style.animationDuration = '0s'
     getOneSoundscape(event.target.value)
   })
 
@@ -107,21 +115,21 @@ document.addEventListener('DOMContentLoaded', () => {
         event.target.dataset.playing = 0
         muteOne(event.target.dataset.id)
       }
-
     }
   })
 
   onOffButton.addEventListener('click', (event) => {
-    // console.log('clicked');
-    createNodes()
+    if (event.target.dataset.on === 'first') {
+      event.target.dataset.on = 1
+      createNodes()
+    } else if (event.target.dataset.on == 1) {
+      event.target.dataset.on = 0
+      gain.disconnect(audioContext.destination)
+    } else if (event.target.dataset.on == 0) {
+      event.target.dataset.on = 1
+      gain.connect(audioContext.destination)
+    }
   })
-
-  // colorButton.addEventListener('click', (event) => {
-  //   let body = document.getElementsByTagName('BODY')
-  //   body.setAttribute('animation-name', 'background')
-    // body.animation-name = 'background;'
-    // body.animation-iteration-count = 'infinite;'
-  // })
 
 
   getSoundscapes()

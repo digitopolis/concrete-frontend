@@ -7,27 +7,27 @@
     <script src="src/index.js" charset="utf-8"></script>
   </head>
   <body>
-    <div class="center">
-      <div id="soundscape-select">
-        <select id="dropdown">
-          <option value="" disabled selected>Select a soundScape</option>
-        </select>
+    <div id="body-div">
+      <div class="center">
+        <div id="soundscape-select">
+          <select id="dropdown">
+            <option value="" disabled selected>Select a soundScape</option>
+          </select>
+        </div>
+        <div id="button-container">
+        </div>
+        <div id="canvas-container">
+          <canvas id="audio-canvas" width="200" height="100" style="border:1px solid #000000;">
+          </canvas>
+        </div>
+        <div id="synth-control">
+          <button type="button" id="on-off-button" data-on="first">🔊</button>
+        </div>
+        <div id="audio-container" hidden>
+        </div>
       </div>
-      <div id="button-container">
-      </div>
-      <div id="canvas-container">
-        <canvas id="audio-canvas" width="200" height="100" style="border:1px solid #000000;">
-        </canvas>
-      </div>
-      <div id="synth-control">
-        <button type="button" id="on-off-button" data-on="off">🔊</button>
-      </div>
-      <div id="audio-container" hidden>
-      </div>
-      <!-- <div id="color-button">
-        <button type="button" id="color-changer">COLOR</button>
-      </div> -->
     </div>
+
 
   </body>
 </html>
