@@ -83,16 +83,16 @@ document.addEventListener('DOMContentLoaded', () => {
     osc.connect(gain)
     gain.connect(audioContext.destination)
 
-    osc.type = 'square'
-    osc.frequency.value = 220
+    osc.type = 'sine'
+    osc.frequency.value = 120
     gain.gain.value = 0.05
 
     osc.start()
 
     canvas.addEventListener('mousemove', (event) => {
       console.log(event);
-      osc.frequency.value = Math.abs(350 - event.clientX) / 100 * 1300
-      gain.gain.value = (370 - event.clientY) / 100 * .5
+      osc.frequency.value = Math.abs(475 - event.clientX) / 100 * 1300
+      gain.gain.value = (393 - event.clientY) / 100 * .5
     })
   }
 
